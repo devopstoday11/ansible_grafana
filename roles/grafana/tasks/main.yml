@@ -1,0 +1,31 @@
+---
+
+- name: Add grafana apt repository
+  apt_repository:
+    repo: "{{ grafana_repo }}"
+    state: present
+
+- name: Add grafana repo key
+  apt_key:
+    url: "{{ grafana_repo_key }}"
+    state: present
+
+- name: Install grafana package
+  apt:
+    name: grafana
+    state: present
+    update_cache: yes
+  notify:
+    - Restart Grafana
+
+- name: Copy conf file
+  template:
+    src: "etc/grafana/grafana.ini"
+    dest: "/etc/grafana/grafana.ini"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - Restart Grafana
+  tags:
+    - config

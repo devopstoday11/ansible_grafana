@@ -1,0 +1,4 @@
+---
+
+grafana_repo: "deb https://packagecloud.io/grafana/stable/ubuntu/ xenial main"
+grafana_repo_key: https://packagecloud.io/gpg.key
