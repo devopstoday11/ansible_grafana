@@ -10,7 +10,7 @@
 
 - name: GRAFANA | Installation
   package:
-    name: grafana={{ grafana_version }}*
+    name: grafana
     state: present
     update_cache: yes
   notify:

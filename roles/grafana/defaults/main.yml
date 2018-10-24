@@ -4,9 +4,6 @@
 # GRAFANA
 ###
 
-# Version
-grafana_version: 5.3.2
-
 # Debian
 grafana_apt_repository: "deb https://packagecloud.io/grafana/stable/debian/ stretch main"
 grafana_apt_key: https://packagecloud.io/gpg.key
