@@ -22,16 +22,10 @@ Be aware that you need to be in the Vagrant directory to be able to run the comm
 
 #### Deployment
 
-Vagrant needs to init the project to run and build it :
+To deploy Grafana on Vagrant instance, just run this command :
 
 ```bash
 $ vagrant up
-```
-
-After build, you can check which virtual machine Vagrant has created :
-
-```bash
-$ vagrant status
 ```
 
 If everything run as expected, you should be able to list the virtual machine created :
