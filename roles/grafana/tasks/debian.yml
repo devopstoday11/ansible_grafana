@@ -1,0 +1,16 @@
+---
+
+- name: GRAFANA DEBIAN | Install prerequisites
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: GRAFANA DEBIAN | Add repository key
+  apt_key:
+    url: "{{ grafana_apt_key }}"
+    state: present
+
+- name: GRAFANA DEBIAN | Add repository
+  apt_repository:
+    repo: "{{ grafana_apt_repository }}"
+    state: present

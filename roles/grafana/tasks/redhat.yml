@@ -1,0 +1,16 @@
+---
+
+- name: GRAFANA REDHAT | Install prerequisites
+  yum:
+    name:
+      - initscripts
+      - fontconfig
+    state: present
+
+- name: GRAFANA REDHAT | Add repository
+  yum_repository:
+    name: grafana
+    description: Grafana repository
+    baseurl: "{{ grafana_yum_repository }}"
+    gpgcheck: yes
+    gpgkey: "{{ grafana_yum_key }}"

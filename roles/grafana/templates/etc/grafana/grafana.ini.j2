@@ -6,47 +6,47 @@
 # change
 
 # possible values : production, development
-; app_mode = production
+app_mode = {{ grafana_app_mode }}
 
 # instance name, defaults to HOSTNAME environment variable value or hostname if HOSTNAME var is empty
-; instance_name = ${HOSTNAME}
+instance_name = {{ grafana_instance_name }}
 
 #################################### Paths ####################################
 [paths]
 # Path to where grafana can store temp files, sessions, and the sqlite3 db (if that is used)
 #
-;data = /var/lib/grafana
+data = {{ grafana_dir_data }}
 #
 # Directory where grafana can store logs
 #
-;logs = /var/log/grafana
+logs = {{ grafana_dir_log }}
 #
 # Directory where grafana will automatically scan and look for plugins
 #
-;plugins = /var/lib/grafana/plugins
+plugins = {{ grafana_dir_plugin }}
 
 #
 #################################### Server ####################################
 [server]
 # Protocol (http, https, socket)
-;protocol = http
+protocol = {{ grafana_protocol }}
 
 # The ip address to bind to, empty will bind to all interfaces
-;http_addr =
+http_addr = {{ grafana_http_addr }}
 
 # The http port  to use
-;http_port = 3000
+http_port = {{ grafana_http_port }}
 
 # The public facing domain name used to access grafana from a browser
-;domain = localhost
+domain = {{ grafana_domain }}
 
 # Redirect to correct domain if host header does not match domain
 # Prevents DNS rebinding attacks
-;enforce_domain = false
+enforce_domain = {{ grafana_enforce_domain }}
 
 # The full public facing url you use in browser, used for redirects and emails
 # If you use reverse proxy and sub path specify full url (with sub path)
-;root_url = http://localhost:3000
+root_url = {{ grafana_root_url }}
 
 # Log web requests
 ;router_logging = false
@@ -55,11 +55,15 @@
 ;static_root_path = public
 
 # enable gzip
-;enable_gzip = false
+enable_gzip = {{ grafana_enable_gzip }}
 
 # https certs & key file
 ;cert_file =
 ;cert_key =
+{% if grafana_cert_file != "" and grafana_cert_key != "" %}
+cert_file = {{ grafana_cert_file }}
+cert_key = {{ grafana_cert_key }}
+{% endif %}
 
 # Unix socket path
 ;socket =
@@ -75,26 +79,45 @@
 ;name = grafana
 ;user = grafana
 ;password = grafana
+{% if grafana_type != "" %}
+type = {{ grafana_type }}
+host = {{ grafana_host }}
+name = {{ grafana_name }}
+user = {{ grafana_user }}
+password = {{ grafana_password }}
+{% endif %}
 
 # Use either URL or the previous fields to configure the database
 # Example: mysql://user:secret@host:port/database
 ;url =
+{% if grafana_type == "" and grafana_url != "" %}
+url = {{ grafana_url }}
+{% endif %}
 
 # For "postgres" only, either "disable", "require" or "verify-full"
 ;ssl_mode = disable
+{% if grafana_type != "" or grafana_url != "" %}
+ssl_mode = {{ grafana_ssl_mode }}
+{% endif %}
 
 # For "sqlite3" only, path relative to data_path setting
-path = grafana.db
+;path = grafana.db
+{% if grafana_type == "" or grafana_url == "" and grafana_path != "" %}
+path = {{ grafana_path }}
+{% endif %}
 
 # Max conn setting default is 0 (mean not set)
 ;max_idle_conn =
 ;max_open_conn =
-
+{% if grafana_type != "" or grafana_url != "" %}
+max_idle_conn = {{ grafana_max_idle_conn }}
+max_open_conn = {{ grafana_open_conn }}
+{% endif %}
 
 #################################### Session ####################################
 [session]
 # Either "memory", "file", "redis", "mysql", "postgres", default is "file"
-;provider = file
+provider = {{ grafana_provider }}
 
 # Provider config options
 # memory: not have any config yet
@@ -103,6 +126,9 @@ path = grafana.db
 # mysql: go-sql-driver/mysql dsn config string, e.g. `user:password@tcp(127.0.0.1:3306)/database_name`
 # postgres: user=a password=b host=localhost port=5432 dbname=c sslmode=disable
 ;provider_config = sessions
+{% if grafana_provider_config != "" %}
+provider_config = {{ grafana_provider_config }}
+{% endif %}
 
 # Session cookie name
 ;cookie_name = grafana_sess
@@ -111,7 +137,7 @@ path = grafana.db
 ;cookie_secure = false
 
 # Session life time, default is 86400
-;session_life_time = 86400
+session_life_time = {{ grafana_session_life_time }}
 
 #################################### Data proxy ###########################
 [dataproxy]
@@ -141,16 +167,16 @@ check_for_updates = false
 #################################### Security ####################################
 [security]
 # default admin user, created on startup
-;admin_user = admin
+admin_user = {{ grafana_admin_user }}
 
 # default admin password, can be changed before first start of grafana,  or in profile settings
-;admin_password = admin
+admin_password = {{ grafana_admin_password }}
 
 # used for signing
-;secret_key = SW2YcwTIb9zpOOhoPsMm
+secret_key =
 
 # Auto-login remember days
-;login_remember_days = 7
+login_remember_days = {{ grafana_login_remember_days }}
 ;cookie_username = grafana_user
 ;cookie_remember_name = grafana_remember
 
@@ -175,22 +201,22 @@ external_enabled = false
 #################################### Users ####################################
 [users]
 # disable user signup / registration
-;allow_sign_up = true
+allow_sign_up = {{ grafana_allow_sign_up }}
 
 # Allow non admin users to create organizations
-allow_org_create = false
+allow_org_create = {{ grafana_allow_org_create }}
 
 # Set to true to automatically assign new users to the default organization (id 1)
-;auto_assign_org = true
+auto_assign_org = {{ grafana_auto_assign_org }}
 
 # Default role new users will be automatically assigned (if disabled above is set to true)
-;auto_assign_org_role = Viewer
+auto_assign_org_role = {{ grafana_auto_assign_org_role }}
 
 # Background text for the user field on the login page
-;login_hint = email or username
+login_hint = {{ grafana_login_hint }}
 
 # Default UI theme ("dark" or "light")
-;default_theme = dark
+default_theme = {{ grafana_default_theme }}
 
 [auth]
 # Set to true to disable (hide) the login form, useful if you use OAuth, defaults to false
@@ -202,7 +228,7 @@ allow_org_create = false
 #################################### Anonymous Auth ##########################
 [auth.anonymous]
 # enable anonymous access
-;enabled = false
+enabled = {{ grafana_anonymous_auth_enabled }}
 
 # specify organization name that should be used for unauthenticated users
 ;org_name = Main Org.
@@ -297,14 +323,13 @@ allow_org_create = false
 [log]
 # Either "console", "file", "syslog". Default is console and  file
 # Use space to separate multiple modes, e.g. "console file"
-;mode = console file
+mode = {{ grafana_mode }}
 
 # Either "trace", "debug", "info", "warn", "error", "critical", default is "info"
-;level = info
+level = {{ grafana_level }}
 
 # optional settings to set different levels for specific loggers. Ex filters = sqlstore:debug
 ;filters =
-
 
 # For "console" mode only
 [log.console]
@@ -321,7 +346,7 @@ allow_org_create = false
 ;format = text
 
 # This enables automated log rotate(switch of following options), default is true
-;log_rotate = true
+log_rotate = {{ grafana_log_rotate }}
 
 # Max line number of single file, default is 1000000
 ;max_lines = 1000000
@@ -330,10 +355,10 @@ allow_org_create = false
 ;max_size_shift = 28
 
 # Segment log daily, default is true
-;daily_rotate = true
+daily_rotate = {{ grafana_daily_rotate }}
 
 # Expired days of log file(delete after max days), default is 7
-;max_days = 7
+max_days = {{ grafana_max_days }}
 
 [log.syslog]
 ;level =
@@ -344,6 +369,10 @@ allow_org_create = false
 # Syslog network type and address. This can be udp, tcp, or unix. If left blank, the default unix endpoints will be used.
 ;network =
 ;address =
+{% if grafana_network != ""  and grafana_address != "" %}
+network = {{ grafana_network }}
+address = {{ grafana_address }}
+{% endif %}
 
 # Syslog facility. user, daemon and local0 through local7 are valid.
 ;facility =
@@ -360,15 +389,18 @@ allow_org_create = false
 
 ;#################################### Dashboard JSON files ##########################
 [dashboards.json]
-;enabled = false
+enabled = {{ grafana_dashboard_enabled }}
 ;path = /var/lib/grafana/dashboards
+{% if grafana_dashboard_enabled == "true" %}
+path = {{ grafana_dashboard_path }}
+{% endif %}
 
 #################################### Alerting ############################
 [alerting]
 # Disable alerting engine & UI features
-;enabled = true
+enabled = {{ grafana_alerting_enabled }}
 # Makes it possible to turn off alert rule execution but alerting UI is visible
-;execute_alerts = true
+execute_alerts = {{ grafana_execute_alerts }}
 
 #################################### Internal Grafana Metrics ##########################
 # Metrics available at HTTP API Url /api/metrics

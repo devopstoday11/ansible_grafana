@@ -1,4 +1,91 @@
 ---
 
-grafana_repo: "deb https://packagecloud.io/grafana/stable/ubuntu/ xenial main"
-grafana_repo_key: https://packagecloud.io/gpg.key
+###
+# GRAFANA
+###
+
+# Version
+grafana_version: 5.3.2
+
+# Debian
+grafana_apt_repository: "deb https://packagecloud.io/grafana/stable/debian/ stretch main"
+grafana_apt_key: https://packagecloud.io/gpg.key
+
+# Redhat
+grafana_yum_repository: https://packagecloud.io/grafana/stable/el/7/$basearch
+grafana_yum_key: https://packagecloud.io/gpg.key https://grafanarel.s3.amazonaws.com/RPM-GPG-KEY-grafana
+
+# System User
+grafana_system_user: grafana
+grafana_system_group: grafana
+
+# Configuration
+grafana_app_mode: production
+grafana_instance_name: ${HOSTNAME}"
+
+# Paths
+grafana_dir_data: /var/lib/grafana
+grafana_dir_log: /var/log/grafana
+grafana_dir_plugin: /var/lib/grafana/plugins
+
+# Server
+grafana_protocol: http
+grafana_http_addr: 0.0.0.0
+grafana_http_port: 3000
+grafana_domain: localhost
+grafana_enforce_domain: "false"
+grafana_root_url: "{{ grafana_protocol }}://{{ grafana_http_addr }}:{{ grafana_http_port }}"
+grafana_enable_gzip: "false"
+grafana_cert_file: ""
+grafana_cert_key: ""
+
+# Database
+grafana_type: "" # Example: postgres
+grafana_host: "" # Example: 127.0.0.1:5432
+grafana_name: "" # Example: grafana
+grafana_user: "" # Example: grafana
+grafana_password: "" # Example: grafana
+grafana_url: "" # Example: mysql://user:secret@host:port/database
+grafana_ssl_mode: disable
+grafana_path: grafana.db
+grafana_max_idle_conn: 100
+grafana_open_conn: 100
+
+# Session
+grafana_provider: file # Either "memory", "file", "redis", "mysql", "postgres", default is "file"
+grafana_provider_config: ""
+grafana_session_life_time: 86400
+
+# Security
+grafana_admin_user: admin
+grafana_admin_password: admin
+grafana_secret_key: SW2YcwTIb9zpOOhoPsMm
+grafana_login_remember_days: 7
+
+# User
+grafana_allow_sign_up: "true"
+grafana_allow_org_create: "false"
+grafana_auto_assign_org: "true"
+grafana_auto_assign_org_role: Viewer
+grafana_login_hint: username
+grafana_default_theme: dark
+
+# Anonymous Auth
+grafana_anonymous_auth_enabled: "false"
+
+# Log
+grafana_mode: "file"
+grafana_level: warn
+grafana_log_rotate: "true"
+grafana_daily_rotate: "true"
+grafana_max_days: 7
+grafana_network: ""
+grafana_address: ""
+
+# Dashboard
+grafana_dashboard_enabled: "false"
+grafana_dashboard_path: "/var/lib/grafana/dashboards"
+
+# Alerting
+grafana_alerting_enabled: "true"
+grafana_execute_alerts: "true"
