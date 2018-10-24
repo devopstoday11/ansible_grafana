@@ -60,7 +60,7 @@ This section list some simple command to use and manage the playbook and the Vag
 
 #### Update with Ansible
 
-To update the Grafana instance configuration thanks to Ansible, you just have to run the Ansible playbook grafana.yml with this command :
+To update the Grafana instance configuration with Ansible, you just have to run the Ansible playbook grafana.yml with this command :
 
 ```bash
 $ ansible-playbook grafana.yml
@@ -68,7 +68,7 @@ $ ansible-playbook grafana.yml
 
 #### Update with Vagrant
 
-To update the Grafana instance configuration thanks to Vagrant, you just have to run provisioning part of the Vagrant file :
+To update the Grafana instance configuration with Vagrant, you just have to run provisioning part of the Vagrant file :
 
 ```bash
 $ vagrant provision
