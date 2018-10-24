@@ -46,6 +46,14 @@ grafana01                   running (virtualbox)
 
 If everything run as expected, you should access the Grafana web interface : http://10.0.0.51:3000/
 
+#### Destroy
+
+To destroy the Vagrant resources created, just run this command :
+
+```bash
+$ vagrant destroy
+```
+
 ### How-To
 
 This section list some simple command to use and manage the playbook and the Vagrant hosts.
@@ -72,14 +80,6 @@ To be able to connect to a Vagrant instance, you should use the CLI which is con
 
 ```bash
 $ vagrant ssh grafana01
-```
-
-#### Destroy
-
-To destroy the Vagrant resources created, just run this command :
-
-```bash
-$ vagrant destroy
 ```
 
 ## Author
