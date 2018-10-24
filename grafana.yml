@@ -1,6 +1,6 @@
 ---
 
-- hosts: all
+- hosts: grafana
   remote_user: vagrant
   become: yes
   roles:
