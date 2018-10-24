@@ -4,7 +4,7 @@
 if [ -f /etc/redhat-release ] ; then
   sudo yum update
   sudo yum upgrade -y
-  sudo yyum install -y python python-apt
+  sudo yum install -y python python-apt
 
 # Manage Debian / Ubuntu environment
 elif [ -f /etc/debian_version ] ; then
