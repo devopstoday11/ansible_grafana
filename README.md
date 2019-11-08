@@ -1,6 +1,6 @@
 # Ansible : Playbook Grafana
 
-The aim of this project is to deploy a simple Grafana instance on Vagrant.
+The aim of this project is to deploy Grafana on Vagrant instances.
 
 ## Getting Started
 
@@ -13,6 +13,11 @@ What things you need to run this Ansible playbook :
 *   [Vagrant](https://www.vagrantup.com/docs/installation/) must be installed on your computer
 *   Update the Vagrant file based on your computer (CPU, memory), if needed
 *   Update the operating system to deploy in the Vagrant file (default: Ubuntu)
+*   Download the Ansible requirements:
+
+```bash
+$ ansible-galaxy install -r requirements.yml
+```
 
 ### Usage
 
@@ -20,25 +25,43 @@ A good point with Vagrant is that you can create, update and destroy all archite
 
 Be aware that you need to be in the Vagrant directory to be able to run the commands.
 
-#### Deployment
+#### Baremetal Deployment
 
-To deploy Grafana on Vagrant instance, just run this command :
+To deploy the Grafana client on baremetal, you have to configure the variable *grafana_install_type* to *baremetal* in the file grafana.yml before running the playbook :
+
+```yaml
+[...]
+vars:
+  grafana_install_type: baremetal
+[...]
+```
+
+Once it's done, you just have to provision the Vagrant instance and the Ansible playbook will automatically be called :
 
 ```bash
 $ vagrant up
 ```
 
-If everything run as expected, you should be able to list the virtual machine created :
+If everything run has expected, you should be able to reach the web interface : http://10.0.4.161:3000/
 
-```bash
-$ vagrant status
+#### Docker Deployment
 
-Current machine states:
+To deploy the Grafana client on Docker, you have to configure the variable *grafana_install_type* to *docker* in the file grafana.yml before running the playbook :
 
-grafana01                   running (virtualbox)
+```yaml
+[...]
+vars:
+  grafana_install_type: docker
+[...]
 ```
 
-If everything run as expected, you should access the Grafana web interface : http://10.0.0.51:3000/
+Once it's done, you just have to provision the Vagrant instance and the Ansible playbook will automatically be called :
+
+```bash
+$ vagrant up
+```
+
+If everything run has expected, you should be able to reach the web interface : http://10.0.4.161:3000/
 
 #### Destroy
 
@@ -54,7 +77,7 @@ This section list some simple command to use and manage the playbook and the Vag
 
 #### Update with Ansible
 
-To update the Grafana instance configuration with Ansible, you just have to run the Ansible playbook grafana.yml with this command :
+To update the Grafana configuration with Ansible, you just have to run the Ansible playbook grafana.yml with this command :
 
 ```bash
 $ ansible-playbook grafana.yml
@@ -62,7 +85,7 @@ $ ansible-playbook grafana.yml
 
 #### Update with Vagrant
 
-To update the Grafana instance configuration with Vagrant, you just have to run provisioning part of the Vagrant file :
+To update the Grafana configuration with Vagrant, you just have to run provisioning part of the Vagrant file :
 
 ```bash
 $ vagrant provision

@@ -1,0 +1,18 @@
+---
+
+- name: GRAFANA ON DOCKER | Create the network
+  docker_network:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: "{{ grafana_docker_network }}"
+
+- name: GRAFANA ON DOCKER | Deploy the container
+  docker_container:
+    name: "{{ item.name }}"
+    image: "{{ item.image }}"
+    state: "{{ item.state }}"
+    restart: yes
+    networks:
+      - name: "{{ item.network }}"
+    ports: "{{ item.ports }}"
+  with_items: "{{ grafana_docker }}"

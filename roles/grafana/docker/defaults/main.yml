@@ -1,0 +1,26 @@
+---
+
+###
+# GRAFANA
+###
+
+# Version
+grafana_version: 6.4.4
+
+###
+# DOCKER
+###
+
+# Network
+grafana_docker_network:
+  - name: grafana
+    state: present
+
+# Stack
+grafana_docker:
+  - name: grafana
+    image: grafana/grafana:{{ grafana_version }}
+    state: started
+    network: grafana
+    ports:
+      - 3000:3000

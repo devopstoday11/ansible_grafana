@@ -1,0 +1,9 @@
+---
+
+dependencies:
+
+  - role: grafana/baremetal
+    when: grafana_install_type == "baremetal"
+
+  - role: grafana/docker
+    when: grafana_install_type == "docker"
