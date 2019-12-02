@@ -7,20 +7,32 @@
 # Version
 grafana_version: 6.4.4
 
+# Directories
+grafana_data_dir: /var/lib/grafana
+grafana_plugin_dir: /var/lib/grafana/plugins
+
+# User
+grafana_user_id: 472 # Grafana user id in Docker
+
 ###
 # DOCKER
 ###
 
 # Network
 grafana_docker_network:
-  - name: grafana
-    state: present
+  name: grafana
+  state: present
 
 # Stack
 grafana_docker:
-  - name: grafana
-    image: grafana/grafana:{{ grafana_version }}
-    state: started
-    network: grafana
-    ports:
-      - 3000:3000
+  env:
+    GF_INSTALL_PLUGINS: ""
+  name: grafana
+  image: grafana/grafana:{{ grafana_version }}
+  state: started
+  network: grafana
+  ports:
+    - 3000:3000
+  volumes:
+    - "{{ grafana_data_dir }}:/var/lib/grafana"
+    - "{{ grafana_plugin_dir }}:/var/lib/grafana/plugins"

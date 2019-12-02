@@ -1,18 +1,29 @@
 ---
 
+- name: GRAFANA ON DOCKER | Create directory
+  file:
+    path: "{{ item }}"
+    owner: "{{ grafana_user_id }}"
+    group: root
+    mode: 0755
+    state: directory
+  loop:
+    - "{{ grafana_data_dir }}"
+    - "{{ grafana_plugin_dir }}"
+
 - name: GRAFANA ON DOCKER | Create the network
   docker_network:
-    name: "{{ item.name }}"
-    state: "{{ item.state }}"
-  with_items: "{{ grafana_docker_network }}"
+    name: "{{ grafana_docker_network.name }}"
+    state: "{{ grafana_docker_network.state }}"
 
 - name: GRAFANA ON DOCKER | Deploy the container
   docker_container:
-    name: "{{ item.name }}"
-    image: "{{ item.image }}"
-    state: "{{ item.state }}"
+    env: "{{ grafana_docker.env }}"
+    name: "{{ grafana_docker.name }}"
+    image: "{{ grafana_docker.image }}"
+    state: "{{ grafana_docker.state }}"
     restart: yes
     networks:
-      - name: "{{ item.network }}"
-    ports: "{{ item.ports }}"
-  with_items: "{{ grafana_docker }}"
+      - name: "{{ grafana_docker.network }}"
+    ports: "{{ grafana_docker.ports }}"
+    volumes: "{{ grafana_docker.volumes }}"
