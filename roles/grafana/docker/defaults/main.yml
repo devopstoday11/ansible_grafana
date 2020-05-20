@@ -5,14 +5,14 @@
 ###
 
 # Version
-grafana_version: 6.4.4
+grafana_version: 7.0.0
 
 # Directories
 grafana_data_dir: /var/lib/grafana
 grafana_plugin_dir: /var/lib/grafana/plugins
 
 # User
-grafana_user_id: 472 # Grafana user id in Docker
+grafana_user_id: "472" # Grafana user id in Docker
 
 ###
 # DOCKER
@@ -26,7 +26,7 @@ grafana_docker_network:
 # Stack
 grafana_docker:
   env:
-    GF_INSTALL_PLUGINS: ""
+    GF_INSTALL_PLUGINS: "https://github.com/NovatecConsulting/novatec-service-dependency-graph-panel/releases/download/v0.3/novatec-service-dependency-graph-panel.zip;novatec-service-dependency-graph-panel"
   name: grafana
   image: grafana/grafana:{{ grafana_version }}
   state: started

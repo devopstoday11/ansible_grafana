@@ -4,6 +4,6 @@
   remote_user: vagrant
   become: yes
   vars:
-    grafana_install_type: baremetal # baremetal / docker
+    grafana_install_type: docker # baremetal / docker
   roles:
     - grafana
