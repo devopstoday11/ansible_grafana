@@ -14,7 +14,7 @@ $num_instances          = 1
 $instance_name_prefix   = "grafana"
 $vm_memory              = 1024
 $vm_cpus                = 1
-$subnet                 = "10.0.4.16" # For 10.0.4.16X
+$subnet                 = "10.0.0.1" # For 10.0.0.1X
 $box                    = SUPPORTED_OS[$os][:box]
 
 # Ansible provisioner
