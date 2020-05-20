@@ -42,7 +42,7 @@ Once it's done, you just have to provision the Vagrant instance and the Ansible 
 $ vagrant up
 ```
 
-If everything run has expected, you should be able to reach the web interface : http://10.0.4.161:3000/
+If everything run as expected, you should be able to reach the web interface : http://10.0.0.11:3000/
 
 #### Docker Deployment
 
